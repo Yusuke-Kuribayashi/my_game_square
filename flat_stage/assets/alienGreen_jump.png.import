@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cgwjxjsf2jd6o"
-path="res://.godot/imported/walking_motion.png-9559809fa852f500b943a4c689494e8f.ctex"
+uid="uid://cq8d1okexjp60"
+path="res://.godot/imported/alienGreen_jump.png-c9cc64ce7eaef1cbfa0317e799034691.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/walking_motion.png"
-dest_files=["res://.godot/imported/walking_motion.png-9559809fa852f500b943a4c689494e8f.ctex"]
+source_file="res://assets/alienGreen_jump.png"
+dest_files=["res://.godot/imported/alienGreen_jump.png-c9cc64ce7eaef1cbfa0317e799034691.ctex"]
 
 [params]
 

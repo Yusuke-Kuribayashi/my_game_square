@@ -1,9 +1,5 @@
 extends CharacterBody2D
 class_name Player
-	
-
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -15,6 +11,12 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @export_group("move")
 @export var move_speed: float = 200.0
 
+# ジャンプ関連の設定
+@export_group("jump")
+@export var jump_force: float = 300.0
+@export var max_y_velocity: float = 400.0
+var can_jump: bool = false
+
 # プレイヤー移動と状態管理
 var direction: Vector2 = Vector2.ZERO
 var state: PLAYER_STATE = PLAYER_STATE.IDLE
@@ -23,7 +25,7 @@ enum PLAYER_STATE {
 	IDLE,
 	MOVE,
 	JUMP,
-	FALL
+	FALL,
 }
 
 func _physics_process(delta: float) -> void:
@@ -34,21 +36,25 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	update_state()
 
-
 func apply_gravity(delta: float) -> void:
 	# 重力を適用
-	if not is_on_floor():
+	if !is_on_floor():
 		velocity.y += gravity * delta
-		velocity.y = min(velocity.y, 400.0)  # 最大落下速度を制限
-	else:
-		velocity.y = 0.0
+		velocity.y = min(velocity.y, max_y_velocity)  # 最大落下速度を制限
 
 func get_input():
 	# 左右移動
 	direction.x = Input.get_axis("left"	, "right")
 
+	# ジャンプ
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		can_jump = true
+
 func apply_movement(delta: float):
-	if direction.x:
+	if can_jump:
+		velocity.y = -jump_force
+		can_jump = false
+	elif direction.x:
 		animated_sprite_2d.flip_h = direction.x < 0
 		velocity.x = direction.x * move_speed
 	else:
@@ -77,7 +83,7 @@ func set_state(new_state: PLAYER_STATE):
 			animated_sprite_2d.play("idle")
 		PLAYER_STATE.MOVE:
 			animated_sprite_2d.play("move")
-		# PLAYER_STATE.JUMP:
-		# 	animated_sprite_2d.play("jump")
-		# PLAYER_STATE.FALL:
-		# 	animated_sprite_2d.play("fall")
+		PLAYER_STATE.JUMP:
+			animated_sprite_2d.play("jump")
+		PLAYER_STATE.FALL:
+			animated_sprite_2d.play("fall")

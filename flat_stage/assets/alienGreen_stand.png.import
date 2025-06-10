@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cbs7u7odyhoth"
-path="res://.godot/imported/idle.png-600a6709c1a21ab5f528af7b11a02560.ctex"
+uid="uid://dfp3qvwgc8ixw"
+path="res://.godot/imported/alienGreen_stand.png-62c71db41ed9a536d5fa20af7b0f3f19.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/idle.png"
-dest_files=["res://.godot/imported/idle.png-600a6709c1a21ab5f528af7b11a02560.ctex"]
+source_file="res://assets/alienGreen_stand.png"
+dest_files=["res://.godot/imported/alienGreen_stand.png-62c71db41ed9a536d5fa20af7b0f3f19.ctex"]
 
 [params]
 
