@@ -1,0 +1,61 @@
+[gd_scene load_steps=3 format=3 uid="uid://bn3dyn1u5n0fw"]
+
+[ext_resource type="PackedScene" uid="uid://dh70fngr5ys2g" path="res://main.tscn" id="1_g1ywh"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="2_c0xf7"]
+
+[node name="BatchEnv" type="Node"]
+
+[node name="Main" parent="." instance=ExtResource("1_g1ywh")]
+
+[node name="Main2" parent="." instance=ExtResource("1_g1ywh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 0)
+
+[node name="Main3" parent="." instance=ExtResource("1_g1ywh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 13)
+
+[node name="Main4" parent="." instance=ExtResource("1_g1ywh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 13)
+
+[node name="Main5" parent="." instance=ExtResource("1_g1ywh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 0)
+
+[node name="Main6" parent="." instance=ExtResource("1_g1ywh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0, 0)
+
+[node name="Main7" parent="." instance=ExtResource("1_g1ywh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 13)
+
+[node name="Main8" parent="." instance=ExtResource("1_g1ywh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0, 13)
+
+[node name="Main9" parent="." instance=ExtResource("1_g1ywh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 27)
+
+[node name="Main10" parent="." instance=ExtResource("1_g1ywh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 27)
+
+[node name="Main11" parent="." instance=ExtResource("1_g1ywh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 40)
+
+[node name="Main12" parent="." instance=ExtResource("1_g1ywh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 0, 40)
+
+[node name="Main13" parent="." instance=ExtResource("1_g1ywh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 27)
+
+[node name="Main14" parent="." instance=ExtResource("1_g1ywh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0, 27)
+
+[node name="Main15" parent="." instance=ExtResource("1_g1ywh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26, 0, 40)
+
+[node name="Main16" parent="." instance=ExtResource("1_g1ywh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0, 40)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.629375, 0.777102, 0, -0.777102, 0.629375, 20.6373, 22.8312, 52.1613)
+current = true
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("2_c0xf7")
+speed_up = 16.0
