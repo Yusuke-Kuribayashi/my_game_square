@@ -1,0 +1,5 @@
+addons/
+logs/
+script_templates/
+.godot/
+examples/

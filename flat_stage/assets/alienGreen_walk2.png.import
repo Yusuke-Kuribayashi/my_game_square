@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c43vcmn34upbv"
-path="res://.godot/imported/hull.png-ae2d7f12cd29e9107a7a6c4a48928792.ctex"
+uid="uid://d35he76tr6kxd"
+path="res://.godot/imported/alienGreen_walk2.png-f12490363c0929c41d47b01581637751.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/hull.png"
-dest_files=["res://.godot/imported/hull.png-ae2d7f12cd29e9107a7a6c4a48928792.ctex"]
+source_file="res://assets/alienGreen_walk2.png"
+dest_files=["res://.godot/imported/alienGreen_walk2.png-f12490363c0929c41d47b01581637751.ctex"]
 
 [params]
 

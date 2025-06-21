@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cidhk4h3nfduj"]
+
+[ext_resource type="Script" path="res://scene/start.gd" id="1_qaum5"]
+[ext_resource type="Texture2D" uid="uid://8x0bbfl6b76u" path="res://assets/signRight.png" id="1_wfdfs"]
+
+[node name="start" type="StaticBody2D"]
+script = ExtResource("1_qaum5")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(13, -44)
+
+[node name="SignRight" type="Sprite2D" parent="."]
+position = Vector2(1, -36)
+texture = ExtResource("1_wfdfs")

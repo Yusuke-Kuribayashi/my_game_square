@@ -1,67 +1,66 @@
 [gd_scene load_steps=10 format=3 uid="uid://q636oikfv7yq"]
 
 [ext_resource type="Script" path="res://scene/player.gd" id="1_lw8ug"]
-[ext_resource type="Texture2D" uid="uid://cgwjxjsf2jd6o" path="res://assets/walking_motion.png" id="2_sh3tf"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_623dl"]
-atlas = ExtResource("2_sh3tf")
-region = Rect2(0, 341, 256, 341)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qm45f"]
-atlas = ExtResource("2_sh3tf")
-region = Rect2(0, 348, 256, 348)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wdyu7"]
-atlas = ExtResource("2_sh3tf")
-region = Rect2(256, 348, 256, 348)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jfiv6"]
-atlas = ExtResource("2_sh3tf")
-region = Rect2(512, 348, 256, 348)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a16vu"]
-atlas = ExtResource("2_sh3tf")
-region = Rect2(768, 348, 256, 348)
+[ext_resource type="Texture2D" uid="uid://b1v6hqb54cfos" path="res://assets/alienGreen_duck.png" id="2_xi8qd"]
+[ext_resource type="Texture2D" uid="uid://dfp3qvwgc8ixw" path="res://assets/alienGreen_stand.png" id="3_4jwqy"]
+[ext_resource type="Texture2D" uid="uid://6he2jdj13m3p" path="res://assets/alienGreen_swim1.png" id="4_ubw5n"]
+[ext_resource type="Texture2D" uid="uid://cq8d1okexjp60" path="res://assets/alienGreen_jump.png" id="5_y5b0r"]
+[ext_resource type="Texture2D" uid="uid://dyqber7hhuwpi" path="res://assets/alienGreen_walk1.png" id="6_n5xb0"]
+[ext_resource type="Texture2D" uid="uid://d35he76tr6kxd" path="res://assets/alienGreen_walk2.png" id="7_soixa"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_f1ggy"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_623dl")
+"texture": ExtResource("2_xi8qd")
 }],
 "loop": true,
-"name": &"idle",
+"name": &"fall",
 "speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qm45f")
+"texture": ExtResource("3_4jwqy")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wdyu7")
+"texture": ExtResource("4_ubw5n")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_y5b0r")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_n5xb0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jfiv6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a16vu")
+"texture": ExtResource("7_soixa")
 }],
 "loop": true,
 "name": &"move",
 "speed": 16.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o13el"]
-radius = 103.0
-height = 350.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0a2e3"]
+size = Vector2(202, 285)
 
 [node name="player" type="CharacterBody2D"]
 script = ExtResource("1_lw8ug")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_f1ggy")
-animation = &"move"
+animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_o13el")
+position = Vector2(-2, 2.5)
+shape = SubResource("RectangleShape2D_0a2e3")
