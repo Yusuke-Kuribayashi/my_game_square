@@ -87,3 +87,16 @@ func set_state(new_state: PLAYER_STATE):
 			animated_sprite_2d.play("jump")
 		PLAYER_STATE.FALL:
 			animated_sprite_2d.play("fall")
+
+
+func _on_wall_body_entered(_body):
+	_reset_agent()
+
+
+func _on_goal_body_entered(_body):
+	# pass # Replace with function body.
+	_reset_agent()
+
+func _reset_agent():
+	position = Vector2(-266, 96)
+	velocity = Vector2.ZERO

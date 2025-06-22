@@ -21,4 +21,4 @@ project/assembly_name="rl_example"
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/godot_rl_agents/plugin.cfg")

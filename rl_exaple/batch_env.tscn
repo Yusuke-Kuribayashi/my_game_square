@@ -77,6 +77,4 @@ script = SubResource("CSharpScript_ca6wh")
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("2_c0xf7")
-control_mode = 2
-speed_up = 16.0
-onnx_model_path = "model.onnx"
+speed_up = 4.0

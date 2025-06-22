@@ -4,7 +4,7 @@ extends CharacterBody3D
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
+# 重力の設定
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var ai_controller:Node3D =  $AIController3D
 @onready var target: Area3D = $"../Target"
@@ -12,7 +12,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var prev_dist: float = INF
 
 func _physics_process(delta):
- 	# 重力の設定
+ 	# 重力の反映
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 

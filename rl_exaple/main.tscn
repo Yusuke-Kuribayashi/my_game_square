@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://dh70fngr5ys2g"]
 
 [ext_resource type="Script" path="res://Cube.gd" id="1_wvnsr"]
-[ext_resource type="Script" path="res://AIController3D.gd" id="2_ydfoc"]
+[ext_resource type="Script" path="res://AIController3D.gd" id="2_77onh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1xnfq"]
 emission_enabled = true
@@ -42,7 +42,7 @@ mesh = SubResource("BoxMesh_3i10h")
 shape = SubResource("BoxShape3D_ieuvs")
 
 [node name="AIController3D" type="Node3D" parent="Cube"]
-script = ExtResource("2_ydfoc")
+script = ExtResource("2_77onh")
 
 [node name="Floor" type="MeshInstance3D" parent="."]
 transform = Transform3D(10, 0, 0, 0, 0.1, 0, 0, 0, 10, 0, 0, 0)
