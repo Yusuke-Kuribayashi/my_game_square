@@ -13,8 +13,6 @@ var init_position: Vector2 = position
 #var prev_dist: float = position.distance_to(goal.position)
 var prev_dist: float = INF
 
-
-
 # アニメーションスプライトの参照
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -80,6 +78,7 @@ func apply_movement(delta: float):
 	elif direction.x:
 		animated_sprite_2d.flip_h = direction.x < 0
 		velocity.x = direction.x * move_speed
+		# velocity.x = ai_controller.move
 	else:
 		velocity.x = 0.0
 

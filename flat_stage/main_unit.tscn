@@ -1,14 +1,16 @@
-[gd_scene load_steps=10 format=3 uid="uid://b245jqculnda1"]
+[gd_scene load_steps=13 format=3 uid="uid://uujn0xn5i8s5"]
 
-[ext_resource type="Texture2D" uid="uid://dnieyg76jerg2" path="res://assets/grassMid.png" id="2_07hah"]
-[ext_resource type="PackedScene" uid="uid://q636oikfv7yq" path="res://scene/player.tscn" id="3_isgew"]
-[ext_resource type="Texture2D" uid="uid://cwcivxdnqio14" path="res://assets/signExit.png" id="4_c13wu"]
-[ext_resource type="Script" path="res://AIController3D.gd" id="5_03oli"]
+[ext_resource type="Texture2D" uid="uid://dnieyg76jerg2" path="res://assets/grassMid.png" id="1_xberq"]
+[ext_resource type="Texture2D" uid="uid://cwcivxdnqio14" path="res://assets/signExit.png" id="2_7uhvs"]
+[ext_resource type="PackedScene" uid="uid://q636oikfv7yq" path="res://scene/player.tscn" id="3_dthdl"]
+[ext_resource type="PackedScene" uid="uid://blgin5et5b7f4" path="res://scene/camera_2d.tscn" id="4_x67cw"]
+[ext_resource type="Script" path="res://AIController3D.gd" id="5_phpcp"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="6_7n2xh"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_wr2n5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_folpl"]
-texture = ExtResource("2_07hah")
+texture = ExtResource("1_xberq")
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
@@ -85,6 +87,24 @@ size = Vector2(39, 385)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ti3u4"]
 size = Vector2(72.5, 78)
 
+[sub_resource type="CSharpScript" id="CSharpScript_hqfbw"]
+script/source = "using Godot;
+using System;
+
+public partial class camera_2d : Camera2D
+{
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
+	{
+	}
+
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
+	{
+	}
+}
+"
+
 [node name="main" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -106,18 +126,32 @@ shape = SubResource("RectangleShape2D_ebegw")
 
 [node name="SignExit" type="Sprite2D" parent="Goal"]
 position = Vector2(1184, 94)
-texture = ExtResource("4_c13wu")
+texture = ExtResource("2_7uhvs")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Goal"]
 position = Vector2(1185.25, 104)
 shape = SubResource("RectangleShape2D_ti3u4")
 
-[node name="player" parent="." instance=ExtResource("3_isgew")]
+[node name="player" parent="." instance=ExtResource("3_dthdl")]
 position = Vector2(-266, 96)
 scale = Vector2(0.2, 0.2)
 
+[node name="Camera2D" parent="player" instance=ExtResource("4_x67cw")]
+position = Vector2(1330, -480)
+scale = Vector2(5, 5)
+zoom = Vector2(1, 1)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 20.0
+script = SubResource("CSharpScript_hqfbw")
+
 [node name="AIController3D" type="Node3D" parent="player"]
-script = ExtResource("5_03oli")
+script = ExtResource("5_phpcp")
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("6_7n2xh")
+control_mode = 2
+onnx_model_path = "model.onnx"
 
 [connection signal="body_entered" from="Wall" to="player" method="_on_wall_body_entered"]
 [connection signal="body_entered" from="Goal" to="player" method="_on_goal_body_entered"]
