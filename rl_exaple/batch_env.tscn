@@ -1,7 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://bn3dyn1u5n0fw"]
+[gd_scene load_steps=4 format=3 uid="uid://bn3dyn1u5n0fw"]
 
 [ext_resource type="PackedScene" uid="uid://dh70fngr5ys2g" path="res://main.tscn" id="1_g1ywh"]
 [ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="2_c0xf7"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_ca6wh"]
+script/source = "using Godot;
+using System;
+
+public partial class Camera3D : Godot.Camera3D
+{
+	// Called when the node enters the scene tree for the first time.
+	public override void _Ready()
+	{
+	}
+
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(double delta)
+	{
+	}
+}
+"
 
 [node name="BatchEnv" type="Node"]
 
@@ -55,7 +73,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39, 0, 40)
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.629375, 0.777102, 0, -0.777102, 0.629375, 20.6373, 22.8312, 52.1613)
 current = true
+script = SubResource("CSharpScript_ca6wh")
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("2_c0xf7")
-speed_up = 16.0
+speed_up = 4.0

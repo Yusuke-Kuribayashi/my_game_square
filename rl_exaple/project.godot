@@ -12,8 +12,12 @@ config_version=5
 
 config/name="rl_example"
 run/main_scene="res://batch_env.tscn"
-config/features=PackedStringArray("4.2", "Forward Plus")
+config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://icon.svg"
+
+[dotnet]
+
+project/assembly_name="rl_example"
 
 [editor_plugins]
 

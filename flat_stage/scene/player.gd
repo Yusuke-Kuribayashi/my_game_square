@@ -1,8 +1,11 @@
 extends CharacterBody2D
 class_name Player
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
+# 重力の設定
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+# AI Agentからの入力
+@onready var ai_controller:Node3D = $AIController3D
+
 
 # アニメーションスプライトの参照
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
@@ -44,7 +47,8 @@ func apply_gravity(delta: float) -> void:
 
 func get_input():
 	# 左右移動
-	direction.x = Input.get_axis("left"	, "right")
+	# direction.x = Input.get_axis("left"	, "right")
+	direction.x = ai_controller.move
 
 	# ジャンプ
 	if Input.is_action_just_pressed("jump") and is_on_floor():
@@ -60,6 +64,7 @@ func apply_movement(delta: float):
 	else:
 		velocity.x = 0.0
 
+# キャラクタの表示モーションを変更
 func update_state():
 	if is_on_floor():
 		if velocity.x == 0:
@@ -87,3 +92,18 @@ func set_state(new_state: PLAYER_STATE):
 			animated_sprite_2d.play("jump")
 		PLAYER_STATE.FALL:
 			animated_sprite_2d.play("fall")
+
+
+# ステージから落ちるとスタート位置に戻る
+func _on_wall_body_entered(_body):
+	_reset_agent()
+
+# ゴールするとスタート位置に戻る
+func _on_goal_body_entered(_body):
+	# pass # Replace with function body.
+	_reset_agent()
+
+# スタート位置に戻る
+func _reset_agent():
+	position = Vector2(-266, 96)
+	velocity = Vector2.ZERO
