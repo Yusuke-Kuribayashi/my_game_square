@@ -5,7 +5,13 @@ class_name Player
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 # AI Agentからの入力
 @onready var ai_controller:Node3D = $AIController3D
-
+# 目標位置の情報
+@onready var goal: Area2D = $"../Goal"
+# キャラクタの初期位置
+var init_position: Vector2 = position
+# キャラクタとゴールの位置
+#var prev_dist: float = position.distance_to(goal.position)
+var prev_dist: float = INF
 
 # アニメーションスプライトの参照
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
@@ -36,6 +42,7 @@ func _physics_process(delta: float) -> void:
 	apply_gravity(delta)
 	get_input()
 	apply_movement(delta)
+	set_reward()
 	move_and_slide()
 	update_state()
 
@@ -44,6 +51,16 @@ func apply_gravity(delta: float) -> void:
 	if !is_on_floor():
 		velocity.y += gravity * delta
 		velocity.y = min(velocity.y, max_y_velocity)  # 最大落下速度を制限
+
+# 報酬値の設定
+func set_reward():
+	# 距離ベース
+	var dist_now = position.distance_to(goal.position)
+	if prev_dist < INF:
+		ai_controller.reward += (prev_dist - dist_now) * 0.05
+
+	# 時間ペナルティ
+	ai_controller.reward -= 0.001
 
 func get_input():
 	# 左右移動
@@ -61,6 +78,7 @@ func apply_movement(delta: float):
 	elif direction.x:
 		animated_sprite_2d.flip_h = direction.x < 0
 		velocity.x = direction.x * move_speed
+		# velocity.x = ai_controller.move
 	else:
 		velocity.x = 0.0
 
@@ -93,17 +111,20 @@ func set_state(new_state: PLAYER_STATE):
 		PLAYER_STATE.FALL:
 			animated_sprite_2d.play("fall")
 
-
 # ステージから落ちるとスタート位置に戻る
 func _on_wall_body_entered(_body):
+	ai_controller.reward -= 1.0 # ステージ外に出ると報酬マイナス
 	_reset_agent()
+	ai_controller.reset()
 
 # ゴールするとスタート位置に戻る
 func _on_goal_body_entered(_body):
-	# pass # Replace with function body.
+	ai_controller.reward += 1.0 # ゴールに到達すると報酬プラス
 	_reset_agent()
+	ai_controller.reset()
 
 # スタート位置に戻る
 func _reset_agent():
-	position = Vector2(-266, 96)
+	# position = Vector2(-266, 96)
+	position = init_position
 	velocity = Vector2.ZERO
