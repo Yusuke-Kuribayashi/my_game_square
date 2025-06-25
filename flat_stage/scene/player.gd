@@ -40,7 +40,7 @@ enum PLAYER_STATE {
 func _physics_process(delta: float) -> void:
 	# 重力
 	apply_gravity(delta)
-	get_input()
+	#get_input()
 	apply_movement(delta)
 	set_reward()
 	move_and_slide()
@@ -71,16 +71,19 @@ func get_input():
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		can_jump = true
 
-func apply_movement(delta: float):
+func apply_movement(_delta: float):
 	if can_jump:
 		velocity.y = -jump_force
 		can_jump = false
-	elif direction.x:
-		animated_sprite_2d.flip_h = direction.x < 0
-		velocity.x = direction.x * move_speed
-		# velocity.x = ai_controller.move
+	# elif direction.x:
+	# 	animated_sprite_2d.flip_h = direction.x < 0
+	# 	#velocity.x = direction.x * move_speed
+	# 	velocity.x = ai_controller.move
+	# else:
+	# 	velocity.x = 0.0
 	else:
-		velocity.x = 0.0
+		animated_sprite_2d.flip_h = ai_controller.move < 0
+		velocity.x = ai_controller.move
 
 # キャラクタの表示モーションを変更
 func update_state():
