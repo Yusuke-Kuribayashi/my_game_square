@@ -24,7 +24,6 @@ var prev_dist: float = INF
 @export_group("jump")
 @export var jump_force: float = 300.0
 @export var max_y_velocity: float = 400.0
-var can_jump: bool = false
 
 # プレイヤー移動と状態管理
 var direction: Vector2 = Vector2.ZERO
@@ -40,7 +39,6 @@ enum PLAYER_STATE {
 func _physics_process(delta: float) -> void:
 	# 重力
 	apply_gravity(delta)
-	#get_input()
 	apply_movement(delta)
 	set_reward()
 	move_and_slide()
@@ -62,29 +60,15 @@ func set_reward():
 	# 時間ペナルティ
 	ai_controller.reward -= 0.001
 
-func get_input():
-	# 左右移動
-	# direction.x = Input.get_axis("left"	, "right")
-	direction.x = ai_controller.move
-
-	# ジャンプ
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		can_jump = true
-
 func apply_movement(_delta: float):
-	can_jump = ai_controller.jump
-	if can_jump:
+	
+	# ジャンプ
+	if ai_controller.jump and is_on_floor():
 		velocity.y = -jump_force
-		can_jump = false
-	# elif direction.x:
-	# 	animated_sprite_2d.flip_h = direction.x < 0
-	# 	#velocity.x = direction.x * move_speed
-	# 	velocity.x = ai_controller.move
-	# else:
-	# 	velocity.x = 0.0
-	else:
-		animated_sprite_2d.flip_h = ai_controller.move < 0
-		velocity.x = ai_controller.move
+
+	# 左右移動
+	animated_sprite_2d.flip_h = ai_controller.move < 0
+	velocity.x = ai_controller.move
 
 # キャラクタの表示モーションを変更
 func update_state():
