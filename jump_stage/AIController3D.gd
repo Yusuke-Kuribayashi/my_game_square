@@ -2,6 +2,8 @@ extends AIController3D
 
 # 実際にキャラクタに与える動き
 var move: float = 0.0
+# jump
+var jump: int = 0
 
 # キャラクタの情報
 @onready var monster: CharacterBody2D = $".."
@@ -36,13 +38,14 @@ func get_action_space() -> Dictionary:
 			"size": 1,
 			"action_type": "continuous"
 		},
-		## ジャンプモーション
-		# "example_actions_discrete" : {
-		# 	"size": 2,
-		# 	"action_type": "discrete"
-		# },
+		# ジャンプモーション
+		 "jump" : {
+		 	"size": 1,
+		 	"action_type": "discrete"
+		 },
 		}
 	
 # 行動の決定
 func set_action(action) -> void:	
 	move = clamp(action["move"][0]*move_speed, -move_speed, move_speed)
+	jump = action["jump"]

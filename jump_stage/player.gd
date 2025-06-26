@@ -72,6 +72,7 @@ func get_input():
 		can_jump = true
 
 func apply_movement(_delta: float):
+	can_jump = ai_controller.jump
 	if can_jump:
 		velocity.y = -jump_force
 		can_jump = false
