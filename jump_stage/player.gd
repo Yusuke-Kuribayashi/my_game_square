@@ -29,6 +29,11 @@ var prev_dist: float = INF
 var direction: Vector2 = Vector2.ZERO
 var state: PLAYER_STATE = PLAYER_STATE.IDLE
 
+# プレイ時間の設定
+var episode_time: float = 0.0
+@export var max_episode_time: float = 60.0  # 最大経過時間
+
+
 enum PLAYER_STATE {
 	IDLE,
 	MOVE,
@@ -37,12 +42,22 @@ enum PLAYER_STATE {
 }
 
 func _physics_process(delta: float) -> void:
+	episode_time += delta  # 時間を積算
+
+	# 時間切れでリセット
+	if episode_time >= max_episode_time:
+		# 時間切れペナルティ
+		ai_controller.reward -= 1.0  
+		_reset_agent()
+		ai_controller.reset()
+
 	# 重力
 	apply_gravity(delta)
 	apply_movement(delta)
 	set_reward()
 	move_and_slide()
 	update_state()
+
 
 func apply_gravity(delta: float) -> void:
 	# 重力を適用
@@ -55,10 +70,10 @@ func set_reward():
 	# 距離ベース
 	var dist_now = position.distance_to(goal.position)
 	if prev_dist < INF:
-		ai_controller.reward += (prev_dist - dist_now) * 0.05
+		ai_controller.reward += (prev_dist - dist_now) * 5.0
 
 	# 時間ペナルティ
-	ai_controller.reward -= 0.001
+	# ai_controller.reward -= 0.001
 
 func apply_movement(_delta: float):
 	
@@ -78,10 +93,11 @@ func update_state():
 		else:
 			set_state(PLAYER_STATE.MOVE)
 	else:
-		if velocity.y > 0:
+		if velocity.y != 0:
 			set_state(PLAYER_STATE.FALL)
 		else:
 			set_state(PLAYER_STATE.JUMP)
+			# ai_controller.reward -= 0.0008
 
 func set_state(new_state: PLAYER_STATE):
 	# 状態が変更されていない場合は何もしない
@@ -107,7 +123,7 @@ func _on_wall_body_entered(_body):
 
 # ゴールするとスタート位置に戻る
 func _on_goal_body_entered(_body):
-	ai_controller.reward += 1.0 # ゴールに到達すると報酬プラス
+	ai_controller.reward += 4.0 # ゴールに到達すると報酬プラス
 	_reset_agent()
 	ai_controller.reset()
 
@@ -116,3 +132,4 @@ func _reset_agent():
 	# position = Vector2(-266, 96)
 	position = init_position
 	velocity = Vector2.ZERO
+	episode_time = 0.0
