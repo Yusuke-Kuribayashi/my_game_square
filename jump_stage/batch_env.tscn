@@ -1,0 +1,59 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnutv3gs2v821"]
+
+[ext_resource type="PackedScene" uid="uid://chag5sxurjf7" path="res://main_unit.tscn" id="1_g3dj1"]
+[ext_resource type="Script" path="res://addons/godot_rl_agents/sync.gd" id="2_akrrk"]
+
+[node name="BatchEnv" type="Node"]
+
+[node name="main" parent="." instance=ExtResource("1_g3dj1")]
+position = Vector2(-923, 111)
+
+[node name="main2" parent="." instance=ExtResource("1_g3dj1")]
+position = Vector2(-923, 896)
+
+[node name="main3" parent="." instance=ExtResource("1_g3dj1")]
+position = Vector2(1548, 111)
+
+[node name="main4" parent="." instance=ExtResource("1_g3dj1")]
+position = Vector2(1548, 896)
+
+[node name="main5" parent="." instance=ExtResource("1_g3dj1")]
+position = Vector2(-923, -1514)
+
+[node name="main6" parent="." instance=ExtResource("1_g3dj1")]
+position = Vector2(-923, -729)
+
+[node name="main9" parent="." instance=ExtResource("1_g3dj1")]
+position = Vector2(-3260, 111)
+
+[node name="main10" parent="." instance=ExtResource("1_g3dj1")]
+position = Vector2(-3260, 896)
+
+[node name="main13" parent="." instance=ExtResource("1_g3dj1")]
+position = Vector2(-923, 1683)
+
+[node name="main14" parent="." instance=ExtResource("1_g3dj1")]
+position = Vector2(1548, 1683)
+
+[node name="main15" parent="." instance=ExtResource("1_g3dj1")]
+position = Vector2(-3260, 1683)
+
+[node name="main11" parent="." instance=ExtResource("1_g3dj1")]
+position = Vector2(-3260, -1514)
+
+[node name="main12" parent="." instance=ExtResource("1_g3dj1")]
+position = Vector2(-3260, -729)
+
+[node name="main7" parent="." instance=ExtResource("1_g3dj1")]
+position = Vector2(1540, -1514)
+
+[node name="main8" parent="." instance=ExtResource("1_g3dj1")]
+position = Vector2(1540, -729)
+
+[node name="Sync" type="Node" parent="."]
+script = ExtResource("2_akrrk")
+speed_up = 16.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(76, -89)
+zoom = Vector2(0.15, 0.15)
