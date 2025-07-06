@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c141fbpykp44a"]
+[gd_scene load_steps=17 format=3 uid="uid://c141fbpykp44a"]
 
 [ext_resource type="PackedScene" uid="uid://q636oikfv7yq" path="res://player/player.tscn" id="1_h1dqt"]
 [ext_resource type="Texture2D" uid="uid://dnieyg76jerg2" path="res://assets/grassMid.png" id="1_x2g1c"]
@@ -149,6 +149,12 @@ sources/1 = SubResource("TileSetAtlasSource_vsth2")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8evyj"]
 size = Vector2(43, 73)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_scb2a"]
+size = Vector2(53, 117)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kjbo7"]
+size = Vector2(60, 132)
+
 [node name="main" type="Node2D"]
 
 [node name="Wall" type="Area2D" parent="."]
@@ -191,6 +197,22 @@ script = ExtResource("6_jbh5q")
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("7_5v5ab")
-speed_up = 8.0
+speed_up = 5.0
+
+[node name="waypoint1" type="Area2D" parent="."]
+position = Vector2(381, -168)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="waypoint1"]
+position = Vector2(5.5, -35)
+shape = SubResource("RectangleShape2D_scb2a")
+
+[node name="waypoint2" type="Area2D" parent="."]
+position = Vector2(1407, -118)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="waypoint2"]
+position = Vector2(0, -43)
+shape = SubResource("RectangleShape2D_kjbo7")
 
 [connection signal="body_entered" from="Wall" to="player" method="_on_wall_body_entered"]
+[connection signal="body_entered" from="waypoint1" to="player" method="_on_waypoint_1_body_entered"]
+[connection signal="body_entered" from="waypoint2" to="player" method="_on_waypoint_2_body_entered"]
