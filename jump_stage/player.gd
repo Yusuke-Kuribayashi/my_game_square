@@ -40,6 +40,12 @@ var prev_potential: float = 0.0
 # waypoint報酬のパラメータ
 var waypoints_passed: Dictionary = {}
 
+# 有益なジャンプに対する報酬のパラメータ
+var last_y_on_jump: float = 0.0
+var jumped_flag: bool = false
+
+
+# 行動の選択肢
 enum PLAYER_STATE {
 	IDLE,
 	MOVE,
@@ -55,6 +61,8 @@ func _ready():
 	waypoints_passed["waypoint1"] = false
 	waypoints_passed["waypoint2"] = false
 	
+	last_y_on_jump = position.y
+
 	print("start")	
 	
 
@@ -93,6 +101,16 @@ func set_reward():
 	ai_controller.reward += potential - prev_potential
 	prev_potential = potential
 
+	# 有意義なジャンプに対する報酬
+	if jumped_flag:
+		var height_gain = last_y_on_jump - position.y
+		if height_gain > 10 and is_on_floor():
+			ai_controller.reward += 0.05
+			#print('in height')
+		else:
+			ai_controller.reward -= 0.02
+		last_y_on_jump = position.y
+
 	# 時間ペナルティ
 	# ai_controller.reward -= 0.001
 
@@ -101,7 +119,10 @@ func apply_movement(_delta: float):
 	# ジャンプ
 	if ai_controller.jump and is_on_floor():
 		velocity.y = -jump_force
-		ai_controller.reward += 0.0001
+		jumped_flag = true
+		# ai_controller.reward -= 0.0001
+	else:
+		jumped_flag = false
 
 	# 左右移動
 	animated_sprite_2d.flip_h = ai_controller.move < 0
