@@ -1,8 +1,9 @@
 #!/bin/bash
 
 python3 stable_baselines3_example.py \
+  --timesteps 1_000_000 \
+  --resume_model_path ./jump_model.zip \
+  # --save_model_path ./jump_model.zip \
   # --onnx_export_path model.onnx \
-  --timesteps 100_000 \
-  --num_envs 8 \
-  --resume_model_path ./flat_stage/model.onnx
+  # --num_envs 8 \
 echo "Export complete."

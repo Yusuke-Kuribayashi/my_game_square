@@ -41,11 +41,13 @@ func get_action_space() -> Dictionary:
 		# ジャンプモーション
 		 "jump" : {
 		 	"size": 1,
-		 	"action_type": "discrete"
-		 },
+		 	"action_type": "continuous"
+		 }
 		}
 	
 # 行動の決定
 func set_action(action) -> void:	
-	move = clamp(action["move"][0]*move_speed, -move_speed, move_speed)
-	jump = action["jump"]
+	#print(action)
+	move = clamp(action["move"][0]*move_speed+10.0, -move_speed, move_speed)
+	#move = action["move"][0]*move_speed
+	jump = 1 if action["jump"][0] > 0.3 else 0
