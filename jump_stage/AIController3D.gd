@@ -23,6 +23,30 @@ func get_obs() -> Dictionary:
 		goal.position.x,
 		goal.position.y,
 	]
+
+	var tilemap = get_node("../../Field")
+	var tile_size = tilemap.tile_set.tile_size
+
+	var check_space = [-3, -2, -1, 0, 1, 2, 3]
+	# 周囲8方向のタイルの有無(0 or 1)を観測に追加
+	for dx in check_space:
+		for dy in check_space:
+			if dx == 0 and dy == 0:
+				continue
+			# 相対座標 → ワールド座標
+			var world_pos = monster.position + Vector2(dx * tile_size.x, dy * tile_size.y)
+
+			# ワールド座標 → タイル座標（整数）
+			var tile_coords = tilemap.local_to_map(world_pos)
+
+			# タイルID取得（レイヤー0）
+			var tile_id = tilemap.get_cell_source_id(0, tile_coords)
+			# タイルが存在するかどうかを観測値に追加
+			# 存在する場合は1、存在しない場合は0
+			# -1はタイルが存在しないことを示す
+			# 0はタイルが存在することを示す
+			obs.append(1 if tile_id != -1 else 0)
+
 	
 	return {"obs": obs}
 

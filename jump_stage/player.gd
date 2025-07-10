@@ -102,14 +102,14 @@ func set_reward():
 	prev_potential = potential
 
 	# 有意義なジャンプに対する報酬
-	if jumped_flag:
-		var height_gain = last_y_on_jump - position.y
-		if height_gain > 10 and is_on_floor():
-			ai_controller.reward += 0.05
-			#print('in height')
-		else:
-			ai_controller.reward -= 0.02
-		last_y_on_jump = position.y
+	#if jumped_flag:
+		#var height_gain = last_y_on_jump - position.y
+		#if height_gain > 10 and is_on_floor():
+			#ai_controller.reward += 0.05
+			##print('in height')
+		#else:
+			#ai_controller.reward -= 0.02
+		#last_y_on_jump = position.y
 
 	# 時間ペナルティ
 	# ai_controller.reward -= 0.001
@@ -120,7 +120,7 @@ func apply_movement(_delta: float):
 	if ai_controller.jump and is_on_floor():
 		velocity.y = -jump_force
 		jumped_flag = true
-		# ai_controller.reward -= 0.0001
+		ai_controller.reward -= 0.001
 	else:
 		jumped_flag = false
 
