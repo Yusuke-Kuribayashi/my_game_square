@@ -112,7 +112,7 @@ func set_reward():
 		#last_y_on_jump = position.y
 
 	# 時間ペナルティ
-	# ai_controller.reward -= 0.001
+	ai_controller.reward -= 0.05
 
 func apply_movement(_delta: float):
 	
@@ -120,7 +120,7 @@ func apply_movement(_delta: float):
 	if ai_controller.jump and is_on_floor():
 		velocity.y = -jump_force
 		jumped_flag = true
-		ai_controller.reward -= 0.001
+		ai_controller.reward -= 50.0
 	else:
 		jumped_flag = false
 
@@ -184,13 +184,13 @@ func _reset_agent():
 func _on_waypoint_1_body_entered(body):
 	#print("pass the waypoint1")
 	if body==self and !waypoints_passed["waypoint1"]:
-		ai_controller.reward = 5.0
+		#ai_controller.reward = 3.0
 		waypoints_passed['waypoint1'] = false
 
 
 func _on_waypoint_2_body_entered(body):
 	#print("pass the waypoint2")
 	if body==self and !waypoints_passed["waypoint2"]:
-		ai_controller.reward = 5.0
+		#ai_controller.reward = 3.0
 		waypoints_passed['waypoint2'] = false
 	
