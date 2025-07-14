@@ -83,7 +83,6 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	update_state()
 
-
 func apply_gravity(delta: float) -> void:
 	# 重力を適用
 	if !is_on_floor():
@@ -94,25 +93,27 @@ func apply_gravity(delta: float) -> void:
 func set_reward():
 	# 距離ベース
 	var dist_now = position.distance_to(goal.position)
-	ai_controller.reward += (prev_dist - dist_now) * 5.0
-
+	ai_controller.reward += (prev_dist - dist_now) * 0.1
+	print(dist_now, ", ", (prev_dist - dist_now) * 0.1)
+	
 	# ポテンシャルシェービング
-	var potential = alpha*(position.x - init_position.x) + beta*max(0.0, init_position.y - position.y)
-	ai_controller.reward += potential - prev_potential
-	prev_potential = potential
+	#var potential = alpha*(position.x - init_position.x) + beta*max(0.0, init_position.y - position.y)
+	#ai_controller.reward += potential - prev_potential
+	#prev_potential = potential
 
 	# 有意義なジャンプに対する報酬
-	#if jumped_flag:
-		#var height_gain = last_y_on_jump - position.y
-		#if height_gain > 10 and is_on_floor():
-			#ai_controller.reward += 0.05
+	if jumped_flag:
+		var height_gain = last_y_on_jump - position.y
+		if height_gain > 10 and is_on_floor():
+			ai_controller.reward += 0.01
 			##print('in height')
-		#else:
-			#ai_controller.reward -= 0.02
-		#last_y_on_jump = position.y
+		else:
+			ai_controller.reward -= 1.0
+		last_y_on_jump = position.y
 
 	# 時間ペナルティ
-	ai_controller.reward -= 0.05
+	ai_controller.reward -= 0.1
+	prev_dist = dist_now
 
 func apply_movement(_delta: float):
 	
@@ -120,7 +121,7 @@ func apply_movement(_delta: float):
 	if ai_controller.jump and is_on_floor():
 		velocity.y = -jump_force
 		jumped_flag = true
-		ai_controller.reward -= 50.0
+		#ai_controller.reward -= 50.0?
 	else:
 		jumped_flag = false
 
@@ -165,7 +166,7 @@ func _on_wall_body_entered(_body):
 
 # ゴールするとスタート位置に戻る
 func _on_goal_body_entered(_body):
-	ai_controller.reward += 4.0 # ゴールに到達すると報酬プラス
+	ai_controller.reward += 10.0 # ゴールに到達すると報酬プラス
 	_reset_agent()
 	ai_controller.reset()
 
@@ -184,13 +185,13 @@ func _reset_agent():
 func _on_waypoint_1_body_entered(body):
 	#print("pass the waypoint1")
 	if body==self and !waypoints_passed["waypoint1"]:
-		#ai_controller.reward = 3.0
+		ai_controller.reward = 1.0
 		waypoints_passed['waypoint1'] = false
 
 
 func _on_waypoint_2_body_entered(body):
 	#print("pass the waypoint2")
 	if body==self and !waypoints_passed["waypoint2"]:
-		#ai_controller.reward = 3.0
+		#ai_controller.reward = 1.0
 		waypoints_passed['waypoint2'] = false
 	

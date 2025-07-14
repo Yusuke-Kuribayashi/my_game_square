@@ -27,10 +27,9 @@ func get_obs() -> Dictionary:
 	var tilemap = get_node("../../Field")
 	var tile_size = tilemap.tile_set.tile_size
 
-	var check_space = [-3, -2, -1, 0, 1, 2, 3]
 	# 周囲8方向のタイルの有無(0 or 1)を観測に追加
-	for dx in check_space:
-		for dy in check_space:
+	for dx in range(-4, 6):
+		for dy in range(-5, 6):
 			if dx == 0 and dy == 0:
 				continue
 			# 相対座標 → ワールド座標
@@ -74,4 +73,4 @@ func set_action(action) -> void:
 	#print(action)
 	move = clamp(action["move"][0]*move_speed, -move_speed, move_speed)
 	#move = action["move"][0]*move_speed
-	jump = 1 if action["jump"][0] > 0.3 else 0
+	jump = 1 if action["jump"][0] > 0.5 else 0
