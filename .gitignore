@@ -4,5 +4,4 @@ script_templates/
 .godot/
 examples/
 
-*.zip
-*.onnx
+checkpoint/
