@@ -149,7 +149,7 @@ sources/1 = SubResource("TileSetAtlasSource_vsth2")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8evyj"]
 size = Vector2(43, 73)
 
-[sub_resource type="CSharpScript" id="CSharpScript_dkc2t"]
+[sub_resource type="CSharpScript" id="CSharpScript_1ftf4"]
 script/source = "using Godot;
 using System;
 
@@ -212,10 +212,12 @@ scale = Vector2(0.2, 0.2)
 script = ExtResource("6_jbh5q")
 
 [node name="Camera2D" type="Camera2D" parent="player"]
-script = SubResource("CSharpScript_dkc2t")
+script = SubResource("CSharpScript_1ftf4")
 
 [node name="Sync" type="Node" parent="."]
 script = ExtResource("7_5v5ab")
+action_repeat = 32
+onnx_model_path = "model.onnx"
 
 [node name="waypoint1" type="Area2D" parent="."]
 position = Vector2(381, -168)

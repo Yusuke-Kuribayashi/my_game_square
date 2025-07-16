@@ -201,6 +201,7 @@ texture = ExtResource("3_7g4n2")
 position = Vector2(74, -29)
 scale = Vector2(0.2, 0.2)
 script = ExtResource("5_t3a8w")
+move_speed = 200.0
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 script = SubResource("CSharpScript_dkc2t")
