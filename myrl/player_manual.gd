@@ -3,6 +3,9 @@ class_name player
 
 # 重力の設定
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+# AI Agentからの入力
+@onready var ai_controller:Node3D = $AIController3D
+
 # 目標位置の情報
 @onready var goal: Area2D = $"../Goal"
 # キャラクタの初期位置
@@ -27,6 +30,12 @@ var can_jump: bool = false
 var direction: Vector2 = Vector2.ZERO
 var state: PLAYER_STATE = PLAYER_STATE.IDLE
 
+# waypoint報酬のパラメータ
+var waypoints_passed: Dictionary = {}
+
+# プレイ時間の設定
+var episode_time: float = 0.0
+@export var max_episode_time: float = 60.0  # 最大経過時間
 
 # 行動の選択肢
 enum PLAYER_STATE {
@@ -39,13 +48,18 @@ enum PLAYER_STATE {
 # ロードしたときのデータを格納
 func _ready():
 	init_position = position
+	prev_dist = position.distance_to(goal.position)
+
+	waypoints_passed["waypoint1"] = false
+	waypoints_passed["waypoint2"] = false
+
 	print("start")	
 	
 
 func _physics_process(delta: float) -> void:
-	# episode_time += delta  # 時間を積算
+	episode_time += delta  # 時間を積算
 
-	# # 時間切れでリセット
+	# 時間切れでリセット
 	# if episode_time >= max_episode_time:
 	# 	# 時間切れペナルティ
 	# 	ai_controller.reward -= 1.0  
@@ -70,11 +84,11 @@ func apply_gravity(delta: float) -> void:
 		velocity.y += gravity * delta
 		velocity.y = min(velocity.y, max_y_velocity)  # 最大落下速度を制限
 
-# # 報酬値の設定
-# func set_reward(eps_time:float):
-# 	# 距離ベース
-# 	var dist_now = position.distance_to(goal.position)
-# 	ai_controller.reward += (prev_dist - dist_now) * 0.2
+# 報酬値の設定
+func set_reward(eps_time:float):
+	# 距離ベース
+	var dist_now = position.distance_to(goal.position)
+	ai_controller.reward += (prev_dist - dist_now) * 0.2
 # 	#print(dist_now, ", ", (prev_dist - dist_now) * 0.1)
 	
 # 	# ポテンシャルシェービング
